@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt","r",stdin);
+        freopen("output.txt","w",stdout);
+    #endif
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+     int n;
+    cin>>n;
+    int A[3];
+    for(int i=0;i<3;i++)
+        cin>>A[i];
+    sort(A,A+3);
+    // for(int i=0;i<3;i++)
+    //     cout<<A[i]<<" ";
+    cout<<endl;
+    int dp[n+1];
+    int i;
+    for(int i=0;i<=n;i++)
+        dp[i]=0;
+    for(int j=0;j<3;j++){
+        if(A[j]<=n)
+            dp[A[j]]=1;
+    }
+    for(int i=A[0]+1;i<=n;i++)
+    {
+        int answer=INT_MIN;
+        for(int j=0;j<3;j++)
+        {
+            if(i-A[j] >=0)
+            answer=max(answer,dp[i-A[j]]);
+        }
+        if(answer!=0)
+            dp[i]=answer+1;
+    }
+    cout<<dp[n];
+    return 0;
+}
