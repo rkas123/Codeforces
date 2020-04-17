@@ -1,0 +1,34 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt","r",stdin);
+    //     freopen("output.txt","w",stdout);
+    // #endif
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n;
+        cin>>n;
+        long long A[n];
+        for(int i=0;i<n;i++)
+            cin>>A[i];
+        long long diff=0;
+        long long maxx=INT_MIN;
+        for(int i=0;i<n;i++)
+        {
+            if(A[i] < maxx)
+            {
+                diff=max(diff,maxx-A[i]);
+            }
+            maxx=max(maxx,A[i]);
+        }
+        if(diff==0)
+            cout<<"0\n";
+        else
+            cout<<floor(log2(diff))+1<<endl;
+    }
+    return 0;
+}
