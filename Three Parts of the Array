@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define MOD 1000000007
+#define int long long
+#define int_32 int
+int32_t main()
+{
+	#ifndef ONLINE_JUDGE
+		freopen("input.txt","r",stdin);
+		freopen("output.txt","w",stdout);
+	#endif
+	ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+  	int n;
+  	cin>>n;
+   	int A[n];
+   	for(int i=0;i<n;i++)
+   		cin>>A[i];
+   	int lsum=A[0];
+   	int rsum=A[n-1];
+   	int* i=A;
+   	int* j=A+n-1;
+   	//cout<<*i<<" "<<*j<<endl;
+   	int answer=0;
+   	while(j>i)
+   	{
+   		//cout<<lsum<<" "<<rsum<<endl;
+   		if(lsum==rsum)
+   		{
+   			answer=lsum;
+   			i++;
+   			j--;
+   			if(i<j){
+   			lsum+=(*i);
+   			rsum+=(*j);
+   		}
+   		}
+   		else if(lsum > rsum)
+   		{
+   			j--;
+   			rsum+=(*j);
+   		}
+   		else
+   		{
+   			i++;
+   			lsum+=(*i);
+   		}
+   	}
+   	cout<<answer;
+    return 0;
+}
