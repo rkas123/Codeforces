@@ -1,0 +1,97 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define MOD 1000000007
+#define ll long long
+bool chec(ll *A, ll s, ll e)
+{
+	ll sum=0;
+	map<ll,bool> m;
+	for(ll i=s;i<e;i++)
+	{
+		if(m.count(A[i])!=0)
+			return false;
+		sum+=A[i];
+		m[A[i]]=true;
+	}
+	ll len=e-s;
+	if(sum==((len)*(len+1))/2)
+		return true;
+	return false;
+}
+int main()
+{
+	#ifndef ONLINE_JUDGE
+		freopen("input.txt","r",stdin);
+		freopen("output.txt","w",stdout);
+	#endif
+	ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+  	ll t;
+  	cin>>t;
+  	while(t--)
+  	{
+  		ll n;
+  		cin>>n;
+  		ll A[n];
+  		ll M=INT_MIN;
+  		for(ll i=0;i<n;i++)
+  		{
+  			cin>>A[i];
+  			M=max(M,A[i]);
+  		}
+  		if(M>=n || M<=0)
+  			cout<<"0"<<endl;
+  		else{
+  		int count=0;
+  		vector<pair<ll,ll>> v;
+  		unordered_map<ll,bool> m;
+  		ll sum=0;
+  		bool check=true;
+  		for(ll i=0;i<M;i++)
+  		{
+  			if(m.count(A[i])!=0){
+  				check=false;
+  				break;
+  			}
+  			m[A[i]]=true;
+  			sum+=A[i];
+  		}
+  		if(check && sum==(M*(M+1))/2)
+  		{
+  			if(chec(A,M,n))
+  			{
+  				count++;
+  				v.push_back(make_pair(M,n-M));
+  			}
+  		}
+  		if(M!=(n-M)){
+  		check=true;
+  		sum=0;
+  		unordered_map<ll,bool> m1;
+  		for(ll i=0;i<n-M;i++)
+  		{
+  			if(m1.count(A[i])!=0)
+  			{
+  				check=false;
+  				break;
+  			}
+  			m1[A[i]]=true;
+  			sum+=A[i];
+  		}
+  		if(check && sum==((n-M)*(n-M+1))/2)
+  		{
+  			if(chec(A,n-M,n))
+  			{
+  				count++;
+  				v.push_back(make_pair(n-M,M));
+  			}
+  		}}
+  		cout<<count<<endl;
+  		for(ll i=0;i<v.size();i++)
+  			cout<<v[i].first<<" "<<v[i].second<<endl;
+  		}
+
+  	}
+   	
+    return 0;
+}
