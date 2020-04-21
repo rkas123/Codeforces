@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define MOD 1000000007
+#define ll long long
+ll Min(ll n, ll m)
+{
+	ll t=n/m;
+	ll a=n%m;
+	ll b=m-a;
+	ll answer=(a*(t+1)*(t))/2 + (b*(t*(t-1))/2);
+	return answer;
+}
+ll Max(ll n, ll m)
+{
+	n-=(m-1);
+	return (n*(n-1))/2;
+}
+int main()
+{
+	#ifndef ONLINE_JUDGE
+		freopen("input.txt","r",stdin);
+		freopen("output.txt","w",stdout);
+	#endif
+	ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+   	ll n,m;
+   	cin>>n>>m;
+   
+   		cout<<Min(n,m)<<" "<<Max(n,m);
+   	
+    return 0;
+}
