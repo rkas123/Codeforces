@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define MOD 1000000007
+#define int long long
+#define int_32 int
+int32_t main()
+{
+	#ifndef ONLINE_JUDGE
+		freopen("input.txt","r",stdin);
+		freopen("output.txt","w",stdout);
+	#endif
+	ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+  	int t;
+  	cin>>t;
+  	while(t--)
+  	{
+  		int n;
+  		cin>>n;
+  		int k=2;
+  		while(1)
+  		{
+  			if(n%((1<<k)-1)==0)
+  			{
+  				cout<<(n)/((1<<k)-1)<<endl;
+  				break;
+  			}
+  			k++;
+  		}
+  	}
+    return 0;
+}
