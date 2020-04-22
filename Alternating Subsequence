@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define MOD 1000000007
+#define int long long
+#define int_32 int
+int32_t main()
+{
+	#ifndef ONLINE_JUDGE
+		freopen("input.txt","r",stdin);
+		freopen("output.txt","w",stdout);
+	#endif
+	ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+  	int t;
+  	cin>>t;
+  	while(t--)
+  	{
+  		int n;
+  		cin>>n;
+  		int A[n];
+  		//vector<int> v;
+  		int answer=0;
+  		for(int i=0;i<n;i++)
+  			cin>>A[i];
+  		int curr;// 1 if current sequence is of +ve numbers and 0 if current is of -ve numbers
+  		int Max=A[0];
+  		if(A[0] > 0)
+  			curr=1;
+  		else
+  			curr=0;
+  		for(int i=1;i<n;i++)
+  		{
+  			if(curr==0)
+  			{
+  				if(A[i]<0)
+  					Max=max(Max,A[i]);
+  				else
+  				{
+  					answer+=Max;
+  					curr=1;
+  					Max=A[i];
+  				}
+  			}
+  			else
+  			{
+  				if(A[i]>0)
+  					Max=max(Max,A[i]);
+  				else
+  				{
+  					answer+=Max;
+  					curr=0;
+  					Max=A[i];
+  				}
+  			}
+  		}
+  		answer+=Max;
+  		cout<<answer;
+  		cout<<endl;
+  	}
+    return 0;
+}
