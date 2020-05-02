@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+#define MOD 1000000007
+#define int long long
+#define in(x) int x; cin>>x;
+using namespace std;
+
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt","r",stdin);
+        freopen("output.txt","w",stdout);
+    #endif
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    in(n);
+    int *A=new int[n];
+    for(int i=0;i<n;i++)
+        cin>>A[i];
+    sort(A,A+n);
+    int answer=0;
+    for(int i=0;i<n;i++)
+    {
+        answer+=(abs(A[i]-i-1));
+    }
+    cout<<answer<<endl;
+
+    return 0;
+}
