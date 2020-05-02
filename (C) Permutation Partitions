@@ -1,0 +1,74 @@
+#include<bits/stdc++.h>
+#define MOD 998244353 
+#define int long long
+#define in(x) int x; cin>>x;
+using namespace std;
+
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt","r",stdin);
+        freopen("output.txt","w",stdout);
+    #endif
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    in(n);
+    in(k);
+    //cout<<n<<" "<<k<<endl;
+    priority_queue<int,vector<int>, greater<int> >pq;
+    int *A=new int[n];
+    for(int i=0;i<k;i++)
+    {
+        cin>>A[i];
+        pq.push(A[i]);
+    }
+    for(int i=k;i<n;i++)
+    {
+        cin>>A[i];
+        if(A[i] > pq.top())
+        {
+            pq.pop();
+            pq.push(A[i]);
+        }
+    }
+    // for(int i=0;i<n;i++)
+    //     cout<<A[i]<<" ";
+    // cout<<endl;
+    int sum=0;
+    int Min=pq.top();
+    //cout<<Min<<endl;
+    for(int i=0;i<k;i++)
+    {
+        sum+=pq.top();
+        //cout<<pq.top()<<" ";
+        pq.pop();
+    }
+    //cout<<endl;
+    //cout<<sum<<endl;
+    int answer=1;
+    int i;
+    for(i=0;i<n;)
+    {
+        //cout<<i<<" ";
+        if(A[i++] >= Min)
+            break;
+    }
+    //cout<<endl;
+    int count=1;
+    while(1)
+    {
+        //cout<<i<<" ";
+        if(k==1)
+        {
+            break;
+        }
+        while(A[i++] < Min)
+            count++;
+        answer=((answer%MOD)*(count%MOD))%MOD;
+        k--;
+        count=1;
+    }
+    //cout<<endl;
+    cout<<sum<<" "<<answer<<endl;
+    return 0;
+}
