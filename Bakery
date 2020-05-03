@@ -1,0 +1,65 @@
+#include<bits/stdc++.h>
+#define int long long
+#define inf 1e18
+#define MOD 1000000007
+using namespace std;
+class edge
+{
+public:
+    int src;
+    int dest;
+    int weight;
+};
+bool cmp(edge a, edge b)
+{
+    return a.weight < b.weight;
+}
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt","r",stdin);
+        freopen("output.txt","w",stdout);
+    #endif
+    int n,e,k;
+    cin>>n>>e>>k;
+    int src,dest,weight;
+    edge* edges=new edge[e];
+    for(int i=0;i<e;i++)
+    {
+        cin>>src>>dest>>weight;
+        edges[i].src=src;
+        edges[i].dest=dest;
+        edges[i].weight=weight;
+    }
+    sort(edges, edges+e, cmp);
+    int storage[k];
+    for(int i=0;i<k;i++)
+    {
+        cin>>storage[i];
+    }
+//    cout<<endl;
+
+    sort(storage,storage +k);
+    //    for(int i=0;i<k;i++)
+    //     cout<<storage[i]<<" ";
+    // cout<<endl;
+    int answer=1e18;
+    for(int i=0;i<e;i++)
+    {
+        src=edges[i].src;
+        dest=edges[i].dest;
+        //cout<<src<<" "<<dest<<endl;
+        bool src_present=binary_search(storage, storage+k, src);
+        bool dest_present=binary_search(storage,storage+k, dest);
+        //cout<<src_present<<" "<<dest_present<<endl;
+        if((src_present && !dest_present) || (!src_present && dest_present )){
+            answer=edges[i].weight;
+            break;
+        }
+    }
+    if(answer != inf)
+        cout<<answer<<endl;
+    else 
+        cout<<-1;
+    return 0;
+}
