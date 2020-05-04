@@ -1,0 +1,72 @@
+#include<bits/stdc++.h>
+#define int long long
+#define inf 1e18
+#define MOD 1000000007
+#define in(x) int x; cin>>x;
+#define f(i,s_,e_) for(int i=s_;i<=e_;i++) // Runs n times, starts from 1 to end
+using namespace std;
+class graph{
+public:
+    unordered_map<int,list<int> > adjlist;
+    void addedge(int u, int v)
+    {
+        adjlist[u].push_back(v);
+        adjlist[v].push_back(u);
+    }
+    void dfs(int src, bool* Map)
+    {
+        Map[src]=true;
+        for(list<int>::iterator it=adjlist[src].begin();it!=adjlist[src].end();it++)
+        {
+            if(!Map[*it])
+            {
+                dfs(*it,Map);
+            }
+        }
+    }
+};
+
+
+bool cmp(pair<int,int> a, pair<int,int> b)
+{
+    return a.second < b.second;
+}
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt","r",stdin);
+        freopen("output.txt","w",stdout);
+    #endif
+    in(n);
+    in(m);
+    vector<pair<int,int> > bribes;
+    f(i,1,n)
+    {
+        in(data);
+        bribes.push_back(make_pair(i,data));
+    }
+    sort(bribes.begin(),bribes.end(),cmp);
+    // for(int i=0;i<n;i++)
+    //     cout<<bribes[i].first<<" "<<bribes[i].second<<endl;
+    graph g;
+    f(i,1,m)
+    {
+        in(src);
+        in(dest);
+        g.addedge(src,dest);
+    }
+    bool *Map=new bool[n+1];
+    f(i,1,n)
+        Map[i]=false;
+    int answer=0;
+    f(i,0,n-1)
+    {
+        //cout<<bribes[i].first<<endl;
+        if(!Map[bribes[i].first]){
+            answer+=bribes[i].second;
+            g.dfs(bribes[i].first,Map);
+        }
+    }
+    cout<<answer<<endl;
+    return 0;
+}
