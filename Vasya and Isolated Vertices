@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+#define int long long
+#define inf 1e18
+#define MOD 1000000007
+#define in(x) int x; cin>>x;
+#define f(i,s_,e_) for(int i=s_;i<=e_;i++) // Runs n times, starts from 1 to end
+using namespace std;
+int lower_bound(int*A,int n,int e)
+{
+    int s=0;
+    int answer=-1;
+    while(s<=n)
+    {
+        int mid=(s+n)/2;
+        if(A[mid]==e)
+            return mid;
+        else if(A[mid] > e)
+        {
+            answer=mid;
+            n=mid-1;
+        }
+        else{
+            s=mid+1;
+        }
+    }
+    return answer;
+}
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt","r",stdin);
+        freopen("output.txt","w",stdout);
+    #endif
+    in(n);
+    in(e);
+    int Min;
+    int Max;
+    if(n < (2*e))
+        Min=0;
+    else
+        Min=(n-(2*e));
+    if(e!=0)
+    {
+    int *nc2=new int[n+1];
+    nc2[0]=0;
+    nc2[1]=0;
+    //nc2[2]=1;
+    f(i,2,n)
+    {
+        nc2[i]=nc2[i-1]+(i-1);
+    }
+    int lb=lower_bound(nc2,n,e);
+    //cout<<lb<<endl;
+    Max=n-lb;
+    cout<<Min<<" "<<Max;
+    }
+    else
+    {
+        cout<<Min<<" "<<n<<endl;
+    }
+    return 0;
+}
