@@ -1,0 +1,66 @@
+#include<bits/stdc++.h>
+#define int long long
+#define inf 1e18
+#define MOD 1000000007
+#define in(x) int x; cin>>x;
+#define f(i,s_,e_) for(int i=s_;i<=e_;i++) // Runs n times, starts from 1 to end
+using namespace std;
+
+class graph{
+public:
+int count_1=0;
+int count_0=0;
+    unordered_map<int,list<int> > adjlist;
+    void addedge(int u, int v)
+    {
+        adjlist[u].push_back(v);
+        adjlist[v].push_back(u);
+    }
+    void dfs(int n)
+    {
+        int color=0;
+        unordered_map<int,bool> visited;
+        dfshelper(1,visited,color);
+        //cout<<count_1<<" "<<count_0<<endl;
+        cout<<(count_1 * count_0) - n + 1;
+    }
+    void dfshelper(int src, unordered_map<int,bool> &visited,int color)
+    {
+        visited[src]=true;
+        if(color==1)
+        {
+            count_1++;
+            color=0;
+        }
+        else
+        {
+            count_0++;
+            color=1;
+        }
+        for(list<int>::iterator it=adjlist[src].begin();it!=adjlist[src].end();it++)
+        {
+            if(!visited[*it])
+            {
+                //cout<<*it<<" -> "<<color<<endl;
+                dfshelper(*it,visited,color);
+            }
+        }
+    }
+};
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt","r",stdin);
+        freopen("output.txt","w",stdout);
+    #endif
+    in(n);
+    graph g;
+    f(i,1,n)
+    {
+        in(src);
+        in(dest);
+        g.addedge(src,dest);
+    }
+    g.dfs(n);
+    return 0;
+}
