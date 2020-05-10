@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+#define int long long
+#define MOD 1000000007
+#define in(x) int x;cin>>x;
+#define w(t) int t;cin>>t;while(t--)
+using namespace std;
+
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt","r",stdin);
+        freopen("output.txt","w",stdout);
+    #endif
+    w(t)
+    {
+        in(x);
+        in(k);
+        int t=x-1;
+        int rem=(k%t);
+        if(rem==0)
+        {
+            int q=(k/t);
+            cout<<(x*q)-1<<endl;
+        }
+        else
+        {
+            int q=(k/t);
+            cout<<(x*q)+rem<<endl;
+        }
+    }
+    return 0;
+}
