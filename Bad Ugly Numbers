@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+#define int long long
+#define MOD 1000000007
+#define in(x) int x; cin>>x;
+#define w(t) int t; cin>>t; while(t--)
+using namespace std;
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt","r",stdin);
+        freopen("output.txt","w",stdout);
+    #endif
+    w(t)
+    {
+        in(n)
+        if(n==1){
+            cout<<"-1"<<endl;
+            continue;
+        }
+        int sum=0;
+        while(n>2)
+        {
+            cout<<"2";
+            sum+=2;
+            n--;
+        }
+        if((sum+5)%3 != 0)
+            cout<<"23"<<endl;
+        else
+            cout<<"33"<<endl;
+    }
+    return 0;
+}
