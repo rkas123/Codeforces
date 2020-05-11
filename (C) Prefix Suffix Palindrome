@@ -1,0 +1,94 @@
+#include<bits/stdc++.h>
+#define MOD 1000000007
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>>t; while(t--)
+//#define N 1000007
+using namespace std;
+
+int kmp(string pat)
+{
+    //cout<<"in kmp"<<endl;
+    int i=0,j=1;
+    int len=pat.length();
+    int reset[len+1];
+    //cout<<"I"<<endl;
+    reset[0]=-1;
+    for(int i=0;i<=pat.length();i++)
+        reset[i]=-1;
+    //cout<<"I"<<endl;
+    i=0;
+    while(i<pat.length())
+    {
+        //cout<<i<<" ";
+        while(j>=0 && pat[i]!=pat[j])
+            j=reset[j];
+        i++;
+        j++;
+        reset[i]=j;
+    }
+    //cout<<"i"<<endl;
+    return reset[pat.length()];
+}
+string func(string s)
+{
+    if(s.length()==0 || s.length()==1)
+        return s;
+    //cout<<s<<endl;
+    string temp=s;
+    reverse(temp.begin(),temp.end());
+    //cout<<temp<<endl;
+    string pat=s+"?"+temp;
+    //cout<<pat<<endl;
+    int l1=kmp(pat);
+    //cout<<l1<<endl;
+    pat="";
+    pat=temp+"?"+s;
+    //cout<<pat<<endl;
+    int l2=kmp(pat);
+    //cout<<l2<<endl;
+    if(l1>=l2)
+    {
+        return s.substr(0,l1);
+    }
+    return temp.substr(0,l2);
+
+}
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt","r",stdin);
+        freopen("output.txt","w",stdout);
+    #endif
+    w(t)
+    {
+        string s;
+        cin>>s;
+        if(s.length()==1){
+            cout<<s<<endl;
+            continue;
+        }
+        int len=s.length();
+        int l=0;
+        for(int i=0,j=len-1;i<j;i++,j--)
+        {
+            if(s[i]==s[j])
+                l++;
+            else
+                break;
+        }
+        //cout<<l<<endl;
+        string beg=s.substr(0,l);
+        //cout<<beg<<endl;
+        string end=s.substr(len-l,l);
+        //cout<<end<<endl;
+        //cout<<len-(2*l)<<endl;
+        string mid=func(s.substr(l,len-(2*l)));
+        //cout<<mid<<endl;
+        string ans=beg+mid+end;
+
+        cout<<ans<<endl;
+    }
+    
+    return 0;
+}
