@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+using namespace std;
+class graph{
+public:
+    map<int,list<int>> adjlist;
+    //Map<int,bool> visited;
+    void addedge(int u,int v)
+    {
+        adjlist[u].push_back(v);
+    }
+};
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    in(n);
+    string s;
+    cin>>s;
+    int st=0;
+    int val=0;
+    bool check=true;
+    int answer=0;
+    int i;
+    for(i=0;i<n;i++)
+    {
+        if(s[i]=='(')
+            val++;
+        else
+            val--;
+        if(val==0)
+        {
+            if(check)
+            {
+                st=i+1;
+            }
+            else
+            {
+                answer+=(i-st+1);
+                st=i+1;
+            }
+            check=true;
+        }
+        if(val<0)
+            check=false;
+        //cout<<val<<" "<<answer<<endl;
+    }
+    //cout<<endl;
+    if(val!=0)
+        cout<<"-1"<<endl;
+    else
+        cout<<answer<<endl;
+
+    return 0;
+}
