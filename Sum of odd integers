@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+using namespace std;
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    w(t)
+    {
+        //bool answer=true;
+        in(n);
+        in(k);
+        if(k>n){
+            cout<<"NO"<<endl;
+            continue;
+        }
+        if(n&1)
+        {
+            if((k&1)==0)
+            {
+                cout<<"NO"<<endl;
+                continue;
+            }
+        }
+        else
+        {
+            if(k&1)
+            {
+               cout<<"NO"<<endl;
+               continue;
+            }
+        }
+        if(n&1)
+        {
+            int rem=sqrt(n);
+            if((rem&1)==0)
+                rem--;
+            if(k<=rem)
+            {
+                cout<<"YES"<<endl;
+                continue;
+            }
+            else
+            {
+                cout<<"NO"<<endl;
+                continue;
+            }
+        }
+        else
+        {
+            int rem=sqrt(n);
+            if(rem&1)
+                rem--;
+            if(k<=rem)
+            {
+                cout<<"YES"<<endl;
+                continue;
+            }
+            else
+            {
+                cout<<"NO"<<endl;
+                continue;
+            }
+        }
+    }
+    return 0;
+}
