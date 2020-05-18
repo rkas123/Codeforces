@@ -1,0 +1,65 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+using namespace std;
+class graph{
+public:
+    map<int,list<int>> adjlist;
+    //Map<int,bool> visited;
+    void addedge(int u,int v)
+    {
+        adjlist[u].push_back(v);
+    }
+};
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    w(t)
+    {
+        in(n);
+        int girlu;
+        int count=0;
+        vector<int> girl(n+1,0);
+        vector<int> boy(n+1,0);
+        for(int i=1;i<=n;i++)
+        {
+            in(k);
+            while(k--)
+            {
+                in(p);
+                if(girl[i]==1)
+                    continue;
+                if(boy[p]==1)
+                    continue;
+                girl[i]=1;
+                boy[p]=1;
+            }
+            if(girl[i]==0)
+            {
+                girlu=i;
+            }
+            else
+                count++;
+        }
+        if(count==n)
+            cout<<"OPTIMAL"<<endl;
+        else
+        {
+            cout<<"IMPROVE"<<endl;
+            cout<<girlu<<" ";
+            for(int i=1;i<=n;i++)
+            {
+                if(boy[i]==0){
+                    cout<<i<<endl;
+                    break;
+                }
+            }
+        }
+    }
+    return 0;
+}
