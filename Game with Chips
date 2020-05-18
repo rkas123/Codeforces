@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+using namespace std;
+class graph{
+public:
+    map<int,list<int>> adjlist;
+    //Map<int,bool> visited;
+    void addedge(int u,int v)
+    {
+        adjlist[u].push_back(v);
+    }
+};
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    in(n);
+    in(m);
+    in(k);
+    int temp;
+    for(int i=0;i<n;i++)
+    {
+        cin>>temp;
+        cin>>temp;
+    }
+    for(int i=0;i<n;i++)
+    {
+        cin>>temp;
+        cin>>temp;
+    }
+    int answer=(n*m)+(n+m)-3;
+    cout<<answer<<endl;
+    for(int i=1;i<n;i++)
+        cout<<"U";
+    for(int i=1;i<m;i++)
+        cout<<"L";
+    for(int i=0;i<n;i++)
+    {
+        if(i&1)
+        {
+            for(int j=1;j<m;j++)
+                cout<<"L";
+        }   
+        else
+        {
+            for(int j=1;j<m;j++)
+                cout<<"R";
+        }
+        if(i!=(n-1))
+        cout<<"D";
+    }
+    return 0;
+}
