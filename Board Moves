@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+using namespace std;
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    w(t)
+    {
+        in(n);
+        int sum=0;
+        int curr=8;
+        for(int i=1;i<=(n-1)/2;i++)
+        {
+            sum+=(curr*i);
+            curr+=8;
+        }
+        cout<<sum<<endl;
+   }
+    return 0;
+}
