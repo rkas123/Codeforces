@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+using namespace std;
+
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    w(t)
+    {
+        in(n);
+        in(d);
+        int data;
+        int answer=-1;
+        int largest=0;
+        for(int i=0;i<n;i++)
+        {
+            cin>>data;
+            if(data==d)
+            {
+                answer=1;
+            }
+            largest=max(largest,data);
+        }
+        if(answer==1)
+        {
+            cout<<"1"<<endl;
+            continue;
+        }
+        if(largest > d){
+            cout<<"2"<<endl;
+            continue;
+        }
+        if((d%largest) == 0)
+            cout<<d/largest<<endl;
+        else
+        cout<<(d/largest)+1<<endl;    
+    }
+    return 0;
+}
