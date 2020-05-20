@@ -1,0 +1,79 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+using namespace std;
+
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    in(n);
+    in(sx);
+    in(sy);
+    int positive_x=0,positive_y=0,negative_x=0,negative_y=0;
+    int pos_pos=0,pos_neg=0,neg_pos=0,neg_neg=0;
+    int answer=0;
+    while(n--)
+    {
+        in(x);
+        x-=sx;
+        in(y);
+        y-=sy;
+        //cout<<x<<" "<<y<<endl;
+        if(x==0)
+        {
+            if(y>0)
+                positive_y++;
+            else
+                negative_y++;
+        }
+        if(y==0)
+        {
+            if(x>0)
+                positive_x++;
+            else
+                negative_x++;
+        }
+        if(x>0 && y>0)
+            pos_pos++;
+        else if(x>0 && y<0)
+            pos_neg++;
+        else if(x<0 && y>0)
+            neg_pos++;
+        else if(x<0 && y<0)
+            neg_neg++;
+    }
+    //cout<<pos_pos<<" "<<pos_neg<<" "<<neg_neg<<" "<<neg_pos<<endl;
+    int a,b;
+        if(pos_pos + neg_pos + positive_y > answer)
+        {
+            answer=pos_pos + neg_pos + positive_y;
+            a=sx;
+            b=sy+1;
+        }
+        if(pos_pos + pos_neg + positive_x > answer)
+        {
+            answer=pos_pos + pos_neg + positive_x;
+            a=sx+1;
+            b=sy;
+        }
+        if(pos_neg + neg_neg + negative_y > answer)
+        {
+            answer=pos_neg + neg_neg + negative_y;
+            a=sx;
+            b=sy-1;
+        }
+        if(neg_neg + neg_pos + negative_x > answer)
+        {
+            answer=neg_neg + neg_pos + negative_x;
+            a=sx-1;
+            b=sy;
+        }
+        cout<<answer<<endl;
+        cout<<a<<" "<<b<<endl;
+    return 0;
+}
