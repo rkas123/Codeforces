@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e18;
+using namespace std;
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    w(t)
+    {
+        in(x);
+        in(y);
+        int a=min(x,y);
+        int b=max(x,y);
+        if(b>(2*a))
+        {
+            cout<<"NO"<<endl;
+            continue;
+        }
+        if((b+a)%3)
+        {
+            cout<<"NO"<<endl;
+            continue;
+        }
+        cout<<"YES"<<endl;
+    }
+    return 0;
+}
