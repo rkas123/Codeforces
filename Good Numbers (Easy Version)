@@ -1,0 +1,82 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e18;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+using namespace std;
+int lower_bound(int*A, int key)
+{
+    int s=0;
+    int e=9;
+    int answer;
+    while(s<=e)
+    {
+        int mid=(s+e)/2;
+        if(A[mid]==key)
+        {
+            return mid;
+        }
+        if(A[mid] > key)
+        {
+            answer=mid;
+            e=mid-1;
+        }
+        else
+        {
+            s=mid+1;
+        }
+    }
+    return answer;
+}
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    int*A=new int[10];
+    A[0]=1;
+    for(int i=1;i<10;i++)
+    {
+        A[i]=A[i-1]*3;
+    }
+    int *cum=new int[10];
+    int sum=0;
+    for(int i=0;i<10;i++)
+    {
+        cum[i]=sum+A[i];
+        sum+=A[i];
+    }
+    // for(int i=0;i<10;i++)
+    //     cout<<cum[i]<<" ";
+    // cout<<endl;
+    w(t)
+    {
+        in(n);
+        int temp=lower_bound(cum,n);
+        int pot1=cum[temp];
+        int pot2=A[temp];
+        //cout<<pot1<<" "<<pot2<<" ";
+        // if(pot1==n)
+        // {
+        //     cout<<pot1<<endl;
+        //     continue;
+        // }
+        if(pot2>=n)
+        {
+            cout<<pot2<<endl;
+            continue;
+        }
+        while(pot2<n)
+        {
+            int rem=n-pot2;
+            int lb=lower_bound(cum,rem);
+            pot2+=A[lb];
+        }
+        cout<<pot2<<endl;
+    }
+    return 0;
+}
