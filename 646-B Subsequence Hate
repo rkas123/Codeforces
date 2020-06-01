@@ -1,0 +1,88 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e9;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    w(t)
+    {
+        int count_0=0;
+        int count_1=0;
+        string s;
+        cin>>s;
+        int len=s.length();
+        if(len<2)
+        {
+            cout<<"0"<<endl;
+            continue;
+        }
+        for(int i=0;i<len;i++)
+        {
+            if(s[i]=='0')
+                count_0++;
+            else
+                count_1++;
+        }
+        int count1=0;
+        int count0=0;
+        int* zero=new int[len];
+        int* one=new int[len];
+        for(int i=0;i<len;i++)
+        {
+            zero[i]=0;
+            one[i]=0;
+        }
+        for(int i=0;i<len;i++)
+        {
+            if(s[i]=='0')
+                count0++;
+            else
+                count1++;
+            zero[i]=count0;
+            one[i]=count1;
+        }
+        // for(int i=0;i<len;i++)
+        //     cout<<zero[i]<<" ";
+        // cout<<endl;
+        // for(int i=0;i<len;i++)
+        //     cout<<one[i]<<" ";
+        // cout<<endl;
+        int answer=inf;
+        for(int i=0;i<len;i++)
+        {   
+            int pos1;
+            int pos2;
+            pos1=(zero[i]+(count_1-one[i]));
+            pos2=(one[i]+(count_0-zero[i]));
+            answer=min(answer,min(pos1,pos2));
+        }
+        cout<<answer<<endl;
+    }
+    return 0;
+}
