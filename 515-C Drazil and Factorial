@@ -1,0 +1,91 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e9;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    in(n);
+    in(num);
+    int*A=new int[11];
+    for(int i=0;i<=10;i++)
+        A[i]=0;
+    int temp=num;
+    while(temp>0)
+    {
+        int rem=temp%10;
+        A[rem+1]--;
+        A[1]++;
+        temp/=10;
+    }
+    for(int i=1;i<=10;i++)
+    {
+        A[i]+=A[i-1];
+    }
+    vector<int> answer;
+    for(int i=9;i>=2;i--)
+    {
+        if(A[i]!=0)
+        {
+            if(i==9)
+            {
+                int count=A[i];
+                A[3]+=(count*2);
+            }
+            else if(i==8)
+            {
+                int count=A[i];
+                A[2]+=(count*3);
+            }
+            else if(i==6)
+            {
+                int count=A[i];
+                A[2]+=(count);
+                A[3]+=(count);
+            }
+            else if(i==4)
+            {
+                int count=A[i];
+                A[2]+=(count*2);
+            }
+            else
+            {
+                int count=A[i];
+                for(int j=0;j<count;j++)
+                    answer.push_back(i);
+                for(int j=1;j<=i;j++)
+                    A[j]-=(count);
+            }
+        }
+    }
+    sort(answer.begin(),answer.end());
+    for(int i=answer.size()-1;i>=0;i--)
+        cout<<answer[i];
+
+    return 0;
+}
