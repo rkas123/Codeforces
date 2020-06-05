@@ -1,0 +1,104 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e9;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    in(n);
+    int*A=new int[n];
+    for(int i=0;i<n;i++)
+        cin>>A[i];
+    int answer=0;
+    int pivot=-1;
+    for(int i=0;i<n;i++)
+    {
+        int curr=A[i];
+        int temp=A[i];
+        for(int j=i-1;j>=0;j--)
+        {
+            if(A[j]<temp)
+            {
+                temp=A[j];
+                curr+=A[j];
+            }
+            else
+            {
+                curr+=temp;
+            }
+        }
+        temp=A[i];
+        for(int j=i+1;j<n;j++)
+        {
+            if(A[j]<temp)
+            {
+                temp=A[j];
+                curr+=A[j];
+            }
+            else
+            {
+                curr+=temp;
+            }
+        }
+        if(answer<curr){
+            answer=curr;
+            pivot=i;
+        }
+    }
+    int*Ans=new int[n];
+    Ans[pivot]=A[pivot];
+    int temp=Ans[pivot];
+    for(int i=pivot-1;i>=0;i--)
+    {   
+        if(A[i]<temp)
+        {
+            temp=A[i];
+            Ans[i]=A[i];
+        }
+        else
+        {
+            Ans[i]=temp;
+        }
+    }
+    temp=A[pivot];
+    for(int i=pivot+1;i<n;i++)
+    {
+        if(A[i]<temp)
+        {
+            temp=A[i];
+            Ans[i]=temp;
+        }
+        else
+        {
+            Ans[i]=temp;
+        }
+    }
+    for(int i=0;i<n;i++)
+        cout<<Ans[i]<<" ";
+    return 0;
+}
