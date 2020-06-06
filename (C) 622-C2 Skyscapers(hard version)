@@ -1,0 +1,115 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e9;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    in(n);
+    int*A=new int[n+1];
+    for(int i=1;i<=n;i++)
+        cin>>A[i];
+    int *left=new int[n+1];
+    int* right=new int[n+1];
+    int* ansl=new int[n];
+    int* ansr=new int[n];
+    for(int i=1;i<=n;i++)
+    {
+        int k=i-1;
+        while(k>0 && A[k]>A[i])
+        {
+            k=left[k];
+        }
+        left[i]=k;
+        if(k==0)
+        {
+            ansl[i]=(i)*A[i];
+        }
+        else
+        {
+            ansl[i]=ansl[k]+(i-k)*A[i];
+        }
+    }
+    for(int i=n;i>=1;i--)
+    {
+        int k=i+1;
+        while(k<n+1 && A[k]>A[i])
+        {
+            k=right[k];
+        }
+        right[i]=k;
+        if(k==n+1)
+        {
+            ansr[i]=(k-i)*A[i];
+        }
+        else
+        {
+            ansr[i]=ansr[k]+(k-i)*A[i];
+        }
+    }
+    // for(int i=1;i<=n;i++)
+    //     cout<<ansl[i]<<" ";
+    // cout<<endl;
+    // for(int i=1;i<=n;i++)
+    //     cout<<ansr[i]<<" ";
+    // cout<<endl;
+    int index;
+    int answer=0;
+    for(int i=1;i<=n;i++)
+    {
+        int temp=ansl[i]+ansr[i]-A[i];
+        if(temp>answer)
+        {
+            answer=temp;
+            index=i;
+        }
+    }
+    int temp=A[index];
+    for(int i=index-1;i>=1;i--)
+    {
+        if(A[i]>=temp)
+            A[i]=temp;
+        else if(A[i] < temp)
+        {
+            temp=A[i];
+        }
+    }
+    temp=A[index];
+    for(int i=index+1;i<=n;i++)
+    {
+        if(A[i]>=temp)
+            A[i]=temp;
+        else
+        {
+            temp=A[i];
+        }
+    }
+    for(int i=1;i<=n;i++)
+        cout<<A[i]<<" ";
+    return 0;
+}
