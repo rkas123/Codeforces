@@ -1,0 +1,83 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e9;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    in(n);in(a);in(b);in(k);
+    int* hp=new int[n];
+    for(int i=0;i<n;i++)
+        cin>>hp[i];
+    int net=a+b;
+    map<int,int> m;
+    for(int i=0;i<n;i++)
+    {
+        float left;
+        if(hp[i]%net == 0)
+        {
+            left=net;
+        }
+        else
+        {
+            left=hp[i]%net;
+        }
+        int moves=ceil(left/a);
+        m[moves-1]++;
+    }
+    // for(map<int,int>::iterator it=m.begin();it!=m.end();it++)
+    //     cout<<it->first<<" "<<it->second<<endl;
+    int points=0;
+    int count=0;
+    for(map<int,int>::iterator it=m.begin();it!=m.end();it++)
+    {
+        if(it->first == 0)
+        {
+            points+=(it->second);
+            continue;
+        }
+        if(k-count < it->first)
+            break;
+        else
+        {
+            int allowed=(k-count)/it->first;
+            if(allowed > it->second)
+            {
+                points+=(it->second);
+                count+=(it->first * it->second);
+            }
+            else
+            {
+                points+=(allowed);
+                count+=(it->first * allowed);
+            }
+        }
+    }
+    cout<<points<<endl;
+    return 0;
+}
