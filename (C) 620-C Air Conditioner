@@ -1,0 +1,68 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e9;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    w(t)
+    {
+        in(n);
+        in(curr);
+        vector<pair<int,int>> v;
+        int* times=new int[n];
+        for(int i=0;i<n;i++)
+        {
+            cin>>times[i];
+            in(a);in(b);
+            v.push_back(make_pair(a,b));
+        }
+        bool flag=true;
+        int low=curr;
+        int high=curr;
+        int t=0;
+        for(int i=0;i<n;i++)
+        {
+            int time=times[i]-t;
+            int l=low-time;
+            int h=high+time;
+            if(v[i].first > h || v[i].second < l)
+            {
+                flag=false;
+                break;
+            }
+            low=max(l,v[i].first);
+            high=min(h,v[i].second);
+            t=times[i];
+        }
+        if(flag) cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+    }
+
+    return 0;
+}
