@@ -1,0 +1,77 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e9;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    in(n);
+    vector<pair<int,int>> indexes;
+    int* A=new int[n];
+    for(int i=0;i<n;i++)
+        cin>>A[i];
+    int s=0;
+    int i=0;
+    for(i=0;i<n-1;i++)
+    {
+        if(A[i]>=A[i+1])
+        {
+            indexes.push_back(make_pair(s,i));
+            s=i+1;
+        }
+    }
+    indexes.push_back(make_pair(s,i));
+    // for(int i=0;i<indexes.size();i++)
+    //     cout<<indexes[i].first<<" "<<indexes[i].second<<endl;
+    int len=0;
+    if(indexes.size()==1)
+    {
+        cout<<indexes[0].second-indexes[0].first+1<<endl;
+    }
+    else{
+        for(int i=0;i<indexes.size();i++)
+            len=max(len,indexes[i].second-indexes[i].first+1);
+    for(int i=0;i<indexes.size()-1;i++)
+    {
+        int l1=indexes[i].first;
+        int r1=indexes[i].second;
+        int l2=indexes[i+1].first;
+        int r2=indexes[i+1].second;
+        //cout<<l1<<" "<<r1<<" "<<l2<<" "<<r2<<endl;
+        if(A[r1]<A[l2+1])
+        {
+            len=max(len,r2-l1);
+        }
+        if(A[r1-1]<A[l2])
+            len=max(len,r2-l1);
+        //len=max(r1-l1+1,len);
+    }
+    cout<<len<<endl;
+}
+    return 0;
+}
