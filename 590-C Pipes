@@ -1,0 +1,99 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e9;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int32_t main()
+{
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    w(t)
+    {
+        in(n);
+        int**A=new int*[2];
+        for(int i=0;i<2;i++)
+            A[i]=new int[n];
+        cin.ignore();
+        for(int i=0;i<n;i++)
+        {
+            char ch=getchar();
+            A[0][i]=ch-'0';
+        }
+        cin.ignore();
+        for(int i=0;i<n;i++)
+        {
+            char ch=getchar();            
+            A[1][i]=ch-'0';
+        }
+        cin.ignore();
+        char in='l';
+        int x=0;
+        int y=0;
+        bool flag=true;
+        while(1)
+        {
+            if(A[x][y]==1 || A[x][y]==2)
+            {
+                if(in=='t' || in=='b'){
+                    flag=false;
+                    break;
+                }
+                y++;
+                in='l';
+            }
+            else
+            {
+                if(in=='l')
+                {
+                    if(x==0){
+                        x++;
+                        in='t';
+                    }
+                    else{
+                        x--;
+                        in='b';
+                    }
+                }
+                else if(in=='t' || in=='b')
+                {
+                    in='l';
+                    y++;
+                }
+            }
+            if(y==n)
+                break;
+        }
+        if(!flag)
+            cout<<"NO"<<endl;
+        else
+        {
+            if(x==1 && in=='l')
+                cout<<"YES"<<endl;
+            else
+                cout<<"NO"<<endl;
+        }
+    }
+
+    return 0;
+}
