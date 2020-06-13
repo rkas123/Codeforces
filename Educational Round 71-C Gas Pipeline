@@ -1,0 +1,96 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e9;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    w(t)
+    {
+        in(n);
+        in(a);in(b);    //a is pipeline cost and b is pillar cost
+        string s; 
+        cin>>s;
+        int*A=new int[n+1];
+        for(int i=0;i<=n;i++)
+            A[i]=1;
+        for(int i=0;i<n;i++)
+        {
+            int temp=s[i]-'0';
+            if(temp==1){
+                A[i]=2;
+                A[i+1]=2;
+            }
+        }
+        vector<int> indexes;
+        int sum=0;
+        for(int i=0;i<=n;i++)
+        {
+            //cout<<A[i]<<" ";
+            sum+=A[i];
+            if(A[i]==2)
+                indexes.push_back(i);
+        }
+        //cout<<endl;
+        int cost=(n*a)+(sum*b);
+        //cout<<(n*a)<<" "<<sum*b<<" "<<cost<<endl;
+        if(indexes.size()==0)
+        {
+            cout<<cost<<endl;
+            continue;
+        }
+        int first=indexes[0];
+        int curr=0;
+        int space=first-curr-1;
+        int ex;
+        if(space==0)
+            ex=a;
+        else
+            ex=min(space*b+a,a);
+        cost+=ex;
+        curr=indexes[0];
+        for(int i=1;i<indexes.size()-1;i++)
+        {
+            space=indexes[i]-curr-1;
+            ex=min((2*a),(space*b));
+            cost+=ex;
+            curr=indexes[i];
+            //cout<<indexes[i]<<" "<<ex<<endl;
+        }
+        int last=indexes[indexes.size()-1];
+        space=(n-last-1);
+        if(space==0)
+            ex=a;
+        else
+            ex=min(space*b+a,a);
+        cost+=ex;
+        cout<<cost<<endl;
+    }
+
+    return 0;
+}
