@@ -1,0 +1,107 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e9;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    w(t)
+    {
+        in(n);
+        in(k);
+        string s;
+        cin>>s;
+        sort(s.begin(),s.end());
+        if(k==1)
+        {
+            cout<<s<<endl;
+            continue;
+        }
+        map<char,int> count;
+        int unique=0;
+        for(int i=0;i<n;i++){
+            if(count.count(s[i])==0)
+                unique++;
+            count[s[i]]++;
+        }
+        //cout<<unique<<endl;
+        vector<char> answer;
+        if(unique==1)
+        {
+            int temp=ceil(n/(1.0*k));
+            while(temp--)
+                answer.push_back(s[0]);
+            for(int i=0;i<answer.size();i++)
+                cout<<answer[i];
+            cout<<endl;
+            continue;
+        }
+        if(unique==2)
+        {
+            map<char,int>::iterator it=count.begin();
+            bool flag=true;
+            if(it->second == k)
+            {
+                answer.push_back(it->first);
+                it++;
+                int temp=ceil(it->second/(1.0*k));
+                while(temp--)
+                    answer.push_back(it->first);
+                for(int i=0;i<answer.size();i++)
+                    cout<<answer[i];
+                cout<<endl;
+                continue;      
+            }
+        }
+        //cout<<"1."<<endl;
+        map<char,int>::iterator it=count.begin();
+        if(k > it->second)
+        {
+            //cout<<"1."<<endl;
+            cout<<s[k-1]<<endl;
+            continue;
+        }
+
+        else
+        {
+            //cout<<"1."<<endl;
+            answer.push_back(it->first);
+            int j=k;
+            for(;j<n;j++)
+                answer.push_back(s[j]);
+            for(int i=0;i<answer.size();i++)
+                cout<<answer[i];
+            cout<<endl;
+        }
+            
+    }
+
+    
+
+    return 0;
+}
