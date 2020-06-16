@@ -1,0 +1,127 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e18;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    w(t)
+    {
+        string s;
+        cin>>s;
+        //cout<<s<<endl;
+        if(s.length()==1)
+        {
+            cout<<"YES"<<endl;
+            int present=s[0]-'a';
+            cout<<s[0];
+            for(int i=0;i<26;i++)
+            {
+                if(i!=present)
+                    cout<<char('a'+i);
+            }
+            cout<<endl;
+            continue;
+        }
+        map<char,set<char>> adj;
+        bool flag=true;
+        int i=0;
+        adj[s[i]].insert(s[i+1]);
+        //cout<<"1"<<endl;
+        for(int i=1;i<s.length()-1;i++)
+        {
+            adj[s[i]].insert(s[i-1]);
+            adj[s[i]].insert(s[i+1]);
+        }
+        int k=s.length()-1;
+        adj[s[k]].insert(s[k-1]);
+        // for(map<char,set<char>>::iterator it=adj.begin();it!=adj.end();it++)
+        // {
+        //     cout<<it->first<<"-> ";
+        //     for(set<char>::iterator it1=it->second.begin();it1!=it->second.end();it1++)
+        //         cout<<*it1<<" ";
+        //     cout<<endl;
+        // }
+        bool first=false;
+        char f;
+        for(map<char,set<char>>::iterator it=adj.begin();it!=adj.end();it++)
+        {
+            if(it->second.size()>2)
+            {
+                flag=false;
+                break;
+            }
+            if(it->second.size()==1){
+                f=it->first;
+                first=true;
+            }
+        }
+        if(!flag || !first){
+            cout<<"NO"<<endl;
+            continue;
+        }
+        //cout<<"1"<<endl;
+        vector<char> answer;
+        if(flag)
+        {   
+            answer.push_back(f);
+            bool* vis=new bool[26];
+            for(int i=0;i<26;i++)
+                vis[i]=false;
+            vis[f-'a']=true;
+            queue<char> q;
+            q.push(f);
+            while(!q.empty())
+            {
+                char node=q.front();
+                q.pop();
+                for(set<char>::iterator it=adj[node].begin();it!=adj[node].end();it++)
+                {
+                    //cout<<node<<" ";
+                    if(!vis[*it-'a'])
+                    {
+                        q.push(*it);
+                        answer.push_back(*it);
+                        vis[*it-'a']=true;
+                    }
+                }
+            }
+            for(int i=0;i<26;i++)
+            {
+                if(!vis[i])
+                answer.push_back('a'+i);
+            }
+            cout<<"YES"<<endl;
+            for(int i=0;i<answer.size();i++)
+                cout<<answer[i];
+            cout<<endl;
+        }
+    }
+
+    return 0;
+}
