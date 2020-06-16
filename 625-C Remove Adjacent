@@ -1,0 +1,85 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e18;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    in(n);
+    string s;
+    cin>>s;
+    vector<char> v;
+    for(int i=0;i<n;i++)
+        v.push_back(s[i]);
+    int index=-1;
+    char highest;
+    while(1)
+    {
+        if(v.size()<=1)
+            break;
+        index=-1;
+        highest='a';
+        int i=0;
+        if(abs(v[0]-v[1])==1)
+        {
+            index=0;
+            highest=v[0];
+        }
+        for(i=1;i<v.size()-1;i++)
+        {
+            if((v[i]-v[i-1])==1 || (v[i]-v[i+1])==1)
+            {
+                if(highest < v[i])
+                {
+                    index=i;
+                    highest=v[i];
+                }
+            }
+        }
+        if(v[i]-v[i-1]==1)
+        {
+            if(highest < v[i])
+            {
+                index=i;
+                highest=v[i];
+            }
+        }
+        if(index==-1)
+            break;
+        v.erase(v.begin()+index);
+        // for(int i=0;i<v.size();i++)
+        //     cout<<v[i]<<" ";
+        // cout<<endl;
+    }
+    // for(int i=0;i<v.size();i++)
+    //     cout<<v[i]<<" ";
+    cout<<n-v.size()<<endl;
+    //cout<<endl;
+
+    return 0;
+}
