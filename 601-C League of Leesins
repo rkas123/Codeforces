@@ -1,0 +1,152 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e18;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int32_t main()
+{
+    // ios_base::sync_with_stdio(false);
+    // cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    in(n);
+    vector<int> tuples[n-2];
+    vector<int> present[n+1];
+    int* count=new int[n+1];
+    int* tempcount=new int[n+1];
+    bool* visited=new bool[n-2];
+    for(int i=0;i<n-1;i++)
+        visited[i]=false;
+    for(int i=1;i<=n;i++){
+        tempcount[i]=0;
+        count[i]=0;
+    }
+    for(int i=0;i<n-2;i++)
+    {
+        for(int j=0;j<3;j++)
+        {
+            in(temp);
+            tuples[i].push_back(temp);
+            present[temp].push_back(i);
+            count[temp]++;
+            tempcount[temp]++;
+        }
+    }
+    int curr;
+    vector<int> order;
+    for(int i=1;i<=n;i++)
+    {
+        if(count[i]==1)
+        {
+            curr=present[i][0];
+            //order.push_back(curr);
+            break;
+        }
+    }
+    // for(int i=1;i<=5;i++)
+    //     cout<<count[i]<<endl;
+    for(int i=1;i<n-2;i++)
+    {
+        //cout<<curr<<endl;
+        int a=-1;int b=-1;
+        for(int j=0;j<tuples[curr].size();j++)
+        {
+            int ele=tuples[curr][j];
+            count[ele]--;
+            if(count[ele]!=0)
+            {
+                if(a==-1)
+                    a=ele;
+                else
+                    b=ele;
+            }
+        }
+        //cout<<a<<" "<<b<<endl;
+        order.push_back(curr);  
+        visited[curr]=true;
+        for(int j=0;j<present[a].size();j++)
+        {
+            for(int k=0;k<present[b].size();k++)
+            {
+                if(present[a][j]==present[b][k] && (!visited[present[a][j]]))
+                {
+                    curr=present[a][j];
+                    break;
+                }
+            }
+        }
+    }
+    order.push_back(curr);
+    // for(int i=0;i<order.size();i++)
+    //     cout<<order[i]<<" ";
+    // cout<<endl;
+    vector<int> answer;
+    for(int i=0;i<order.size()-1;i++)
+    {
+        int curr=order[i];
+        int next=order[i+1];
+        for(int j=0;j<3;j++)
+        {
+
+            int ele=tuples[curr][j];
+            //cout<<ele<<endl;
+            bool flag=false;
+            for(int k=0;k<3;k++)
+            {
+                if(tuples[next][k]==ele)
+                {
+                    flag=true;
+                    break;
+                }
+            }
+            if(!flag){
+                answer.push_back(ele);
+                break;
+            }
+        }
+    }
+    // for(int i=0;i<answer.size();i++)
+    //     cout<<answer[i]<<" ";
+    // cout<<endl;
+
+    // curr=order[order.size()-1];
+    // cout<<curr<<endl;
+    int l1,l2,l3;
+    for(int i=0;i<3;i++)
+    {
+        //cout<<tuples[curr][i]<<endl;
+        if(tempcount[tuples[curr][i]]==1)
+            l3=tuples[curr][i];
+        else if(tempcount[tuples[curr][i]]==2)
+            l2=tuples[curr][i];
+        else
+            l1=tuples[curr][i];
+    }
+    //cout<<l1<<" "<<l2<<" "<<l3<<endl;
+    answer.push_back(l1);answer.push_back(l2);answer.push_back(l3);
+    for(int i=0;i<answer.size();i++)
+       cout<<answer[i]<<" ";
+    cout<<endl;
+    return 0;
+}
