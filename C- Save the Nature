@@ -1,0 +1,99 @@
+#include<bits/stdc++.h>
+#define int long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e18;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int answer=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            answer*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return answer;
+
+}
+int gcd(int a, int b)
+{
+    if(a==0)
+        return b;
+    return gcd(b%a,a);
+}
+bool cmp(int a,int b)
+{
+    return a>b;
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    w(t)
+    {
+        in(n);
+        int*A=new int[n];
+        for(int i=0;i<n;i++)
+            cin>>A[i];
+        sort(A,A+n,cmp);
+        int* cum=new int[n+1];
+        cum[0]=0;
+        for(int i=1;i<=n;i++)
+            cum[i]=cum[i-1]+A[i-1];
+        // for(int i=0;i<=n;i++)
+        //     cout<<cum[i]<<" ";
+        // cout<<endl;
+        in(a);in(x);
+        in(b);in(y);
+        in(val);
+        int g=gcd(x,y);
+        int lcm=(x*y)/g;
+        int i=min(x,y);
+        int jump=i;
+        bool flag=false;
+        while(i<=n)
+        {
+            int lcm_count=i/lcm;
+            int x_count=i/x - lcm_count;
+            int y_count=i/y - lcm_count;
+            int j=0;
+            int temp=0;
+            temp=(cum[lcm_count]-cum[j])/100*(a+b);
+            j=lcm_count;
+            int temp1=temp;
+            int k=j;
+            temp1+=((a*(cum[j+x_count]-cum[j]))/100);
+            k+=x_count;
+            temp1+=((b*(cum[k+y_count]-cum[k]))/100);
+            int temp2=temp;
+            k=j;
+            temp2+=((b*(cum[j+y_count]-cum[j]))/100);
+            k+=y_count;
+            temp2+=((a*(cum[k+x_count]-cum[k]))/100);
+            temp=max(temp1,temp2);
+            if(temp>=val)
+            {
+                flag=true;
+                break;
+            }
+            i++;
+        }
+        if(flag)
+            cout<<i<<endl;
+        else
+            cout<<"-1"<<endl;
+    }
+
+    return 0;
+}
