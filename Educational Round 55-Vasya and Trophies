@@ -1,0 +1,98 @@
+#include<bits/stdc++.h>
+#define int long long
+#define uint unsigned long long
+#define in(x) int x;cin>>x;
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e18;
+#define f(i,s,e) for(int i=s;i<e;i++)
+#define MOD 1000000007
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int ans=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            ans*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return ans;
+
+}
+int GCD(int a,int b)
+{
+    if(a==0)
+        return b;
+    return GCD(b%a,a);
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif  
+    in(n);
+    string s;
+    cin>>s;
+    //cout<<s<<endl;
+    int longest=0;
+    vector<pair<int,int>> v;
+    int i=0;
+    while(i<n){
+        if(s[i]=='S')
+            i++;
+        else{
+            //int len=0;
+            int st=i;
+            while(s[i]=='G' && i<n)
+            {
+                i++;
+            }
+            int len=i-st;
+            longest=max(longest,len);
+            v.push_back(make_pair(st,i-1));
+        }
+    }
+    //cout<<longest<<endl;
+    //for(int i=0;i<v.size();i++)
+    // {
+    //     cout<<v[i].first<<" "<<v[i].second<<endl;
+    // }
+    if(v.size()<=1)
+    {
+        cout<<longest<<endl;
+    }
+    else if(v.size()==2)
+    {
+        if(v[0].second == v[1].first - 2)
+        {
+            longest=(v[0].second-v[0].first+1)+(v[1].second-v[1].first+1);
+        }
+        else
+            longest++;
+        cout<<longest<<endl;
+    }
+    else
+    {
+        longest+=1;
+        for(int i=1;i<v.size();i++)
+        {
+            if(v[i-1].second == (v[i].first -2))
+            {
+                int len1=v[i].second-v[i].first +1;
+                int len2=v[i-1].second-v[i-1].first +1;
+                //cout<<len1<<" "<<len2<<endl;
+                longest=max(longest,len1+len2+1);
+            }
+        }
+        cout<<longest<<endl;
+    }
+
+    return 0;
+}
