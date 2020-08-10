@@ -1,0 +1,94 @@
+#include<bits/stdc++.h>
+#define int long long
+#define uint unsigned long long
+#define in(x) int x;cin>>x
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e18
+#define endl "\n"
+#define MOD 1000000007
+#define L 2*I+1
+#define R 2*I+2
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int ans=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            ans*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return ans;
+
+}
+int GCD(int a,int b)
+{
+    if(a==0)
+        return b;
+    return GCD(b%a,a);
+}
+int get_parent(int* parent,int key)
+{
+    if(parent[key]==key)
+        return key;
+    return parent[key]=get_parent(parent,parent[key]);
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    in(n);in(m);
+    vector<int> l[n+1];
+    for(int i=1;i<=n;i++)
+    {
+        w(t)
+        {
+            in(a);
+            l[i].push_back(a);
+        }
+    }
+    int* parent=new int[m+1];
+    for(int i=1;i<=m;i++)
+    {
+        parent[i]=i;
+    }
+    for(int i=1;i<=n;i++)
+    {
+        if(l[i].size()<=1)
+            continue;
+        int temp=l[i][0];
+        int P=get_parent(parent,temp);
+        for(int j=1;j<l[i].size();j++){
+            int superparent=get_parent(parent,l[i][j]);
+            parent[superparent]=P;
+        }
+    }
+    int count=0;
+    int count1=0;
+    bool* found=new bool[m+1];
+    for(int i=0;i<=m;i++)
+        found[i]=false;
+    for(int i=1;i<=n;i++)
+    {
+        if(l[i].size()==0){
+            count++;
+            continue;
+        }
+        int super=get_parent(parent,l[i][0]);
+        if(!found[super])
+            count1++;
+        found[super]=true;
+    }
+    if(count1>0)
+        count1--;
+    cout<<count+count1<<endl;
+    return 0;
+}
