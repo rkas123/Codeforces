@@ -1,0 +1,109 @@
+#include<bits/stdc++.h>
+#define int long long
+#define uint unsigned long long
+#define in(x) int x;cin>>x
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e18
+#define endl "\n"
+#define MOD 1000000007
+#define L 2*I+1
+#define R 2*I+2
+const double pi = 3.14159265358979323846;
+using namespace std;
+int fastexp(int a,int b)
+{
+    int ans=1;
+    int temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            ans*=(temp);
+        temp*=temp;
+        b>>=1;
+    }
+    return ans;
+
+}
+int GCD(int a,int b)
+{
+    if(a==0)
+        return b;
+    return GCD(b%a,a);
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    in(n);in(p);
+    string s;
+    cin>>s;
+    s='%'+s;
+    //cout<<s<<endl;
+    int count=0;
+    bool* A=new bool[n+1];
+    for(int i=0;i<=n;i++)
+        A[i]=false;
+    int i=1,j=n;
+    while(i<j)
+    {
+        if(s[i]!=s[j])
+        {
+            int l=s[i]-'a';
+            int r=s[j]-'a';
+            count+=(min(abs(l-r),26-abs(l-r)));
+            A[i]=true;
+            A[j]=true;
+        }
+        i++;j--;
+    }
+    //cout<<count<<endl;
+    if(p<=(n/2))
+    {
+        int s;
+        for(s=1;s<p;s++)
+        {
+            if(A[s])
+            {
+                break;
+            }
+        }
+        int e;
+        for(e=n/2;e>p;e--)
+        {
+            if(A[e])
+                break;
+        }
+        int left=p-s;
+        int right=e-p;
+        int steps=left+right;
+        steps+=min(left,right);
+        cout<<steps+count<<endl;
+    }
+    else
+    {
+        int s;
+        for(s=n/2+1;s<p;s++)
+        {
+            if(A[s])
+                break;
+        }
+        int e;
+        for(e=n;e>p;e--)
+        {
+            if(A[e])
+                break;
+        }
+        int left=p-s;
+        int right=e-p;
+        int steps=left+right;
+        steps+=min(left,right);
+        cout<<steps+count<<endl;
+    }
+
+    return 0;
+}
