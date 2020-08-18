@@ -1,0 +1,84 @@
+#include<bits/stdc++.h>
+#define int long long
+#define uint unsigned long long
+#define in(x) int x;cin>>x
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e18
+#define endl "\n"
+#define MOD 1000000007
+#define L 2*I+1
+#define R 2*I+2
+const double pi = 3.14159265358979323846;
+using namespace std;
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+        in(n);
+        int*A=new int[n];
+        for(int i=0;i<n;i++)
+            cin>>A[i];
+        if(n==1){
+            cout<<"1"<<endl;
+            return 0;
+        }
+        vector<pair<int,int>> v;
+        int s=0;
+        int i=1;
+        int answer=0;
+        while(i<n)
+        {
+            while(i<n && A[i]>A[i-1])
+                i++;
+            v.push_back(make_pair(s,i-1));
+            answer=max(answer,i-s);
+            s=i;
+            i++;
+            if(i==n)
+            {
+                v.push_back(make_pair(n-1,n-1));
+                break;
+            }
+        }
+        
+        if(v.size()==1)
+        {
+            cout<<n<<endl;
+            return 0;
+        }
+        for(i=0;i<v.size()-1;i++)
+        {
+            pair<int,int> a=v[i];
+            pair<int,int> b=v[i+1];
+            //cout<<a.first<<" "<<a.second<<", "<<b.first<<" "<<b.second<<endl;
+            
+            if(a.second == a.first)
+            {
+                answer=max(answer,b.second-b.first+2);
+                continue;
+            }
+            else if(b.second == b.first)
+            {
+                answer=max(answer,a.second-a.first+2);
+                continue;
+            }
+            
+            if(A[a.second-1] < A[b.first]-1 || A[b.first+1] > A[a.second]+1)
+            {
+                int len=b.second-a.first+1;
+                answer=max(answer,len);
+            }
+            else
+            {
+                answer=max(answer,max(a.second-a.first+2,b.second-b.first+2));
+            }
+        }
+        cout<<answer<<endl;
+    return 0;
+}
