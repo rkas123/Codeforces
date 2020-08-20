@@ -1,0 +1,77 @@
+#include<bits/stdc++.h>
+#define int long long
+#define uint unsigned long long
+#define in(x) int x;cin>>x
+#define w(t) int t; cin>> t; while(t--)
+#define Map unordered_map
+#define inf 1e18
+#define endl "\n"
+#define MOD 1000000007
+#define L 2*I+1
+#define R 2*I+2
+const double pi = 3.14159265358979323846;
+using namespace std;
+bool cmp(pair<int,int> a, pair<int,int> b)
+{
+    if(a.first == b.first)
+    {
+        return a.second > b.second;
+    }
+    return a.first < b.first;
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE 
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    in(cost);
+    int*A=new int[10];
+    vector<pair<int,int>> v;
+    for(int i=1;i<=9;i++){
+        cin>>A[i];
+        v.push_back(make_pair(A[i],i));
+    }
+    sort(v.begin(),v.end(),cmp);
+    int least=v[0].first;
+    int digits=cost/least;
+    int digit=v[0].second;
+    if(digits==0)
+    {
+        cout<<"-1"<<endl;
+        return 0;
+    }
+    
+    int* answer=new int[digits];
+    for(int i=0;i<digits;i++)
+        answer[i]=v[0].second;
+    cost-=(digits*least);
+    int j=9;
+    int i=0;
+    while(j>digit && i<digits)
+    {
+        
+        int more=A[j]-least;
+        int count=cost/more;
+                if(count==0){
+            j--;
+            continue;
+        }
+        count=min(count,digits-i);
+        cost-=(count*more);
+        
+        while(i<digits && count--)
+        {
+            answer[i++]=j;
+        }
+        
+        j--;
+        
+    }
+    for(int i=0;i<digits;i++)
+        cout<<answer[i];
+    cout<<endl;
+    return 0;
+}
