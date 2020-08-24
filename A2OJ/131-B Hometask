@@ -1,0 +1,174 @@
+#include<bits/stdc++.h>
+
+#define ll long long
+#define ld long double
+
+#define pii pair<int,int>
+#define vi vector<int> 
+#define vvi vector<vi> 
+#define vpii vector<pii> 
+
+#define pll pair<ll,ll> 
+#define vl vector<ll> 
+#define vvl vector<vl> 
+#define vpll vector<pll> 
+
+#define inl(x) ll x;cin>>x
+#define in(x) int x;cin>>x
+#define mk(t,a,n) t*a = new t[n]
+#define inp(a,n) for(int i = 0;i<n;i++)cin>>a[i]
+#define sea(a,n,v) for(int i = 0;i<n;i++)a[i] = v
+#define pb push_back
+#define F first
+#define S second
+#define LEFT 2*I+1
+#define RIGHT 2*I+2
+#define endl "\n"
+#define mii map<int,int>
+#define mll map<ll,ll>
+#define ub upper_bound
+#define lb lower_bound
+#define um unordered_map
+#define lop(i,n) for(ll i=0;i<n;i++)
+#define lop1(i,n) for(ll i=1;i<=n;i++)
+#define lopr(i,n) for(ll i=n-1;i>=0;i--)
+#define test() int t;cin>>t;while(t--)
+#define KStest() int t,t1;cin>>t;t1=t;while(t--)
+#define KScout cout<<"Case #"<<t1-t<<": "
+
+const int mod = 1e9+7,MAX = 1e6+5;
+const ll inf = 1e18+5;
+const double pi = 3.14159265358979323846;
+
+//https://github.com/rkas123/TEMPLATE/blob/master/Template.cpp
+//Template taken from here
+
+using namespace std;
+
+ll power(ll x,ll y)
+{
+    ll temp=1ll;
+
+    while(y)
+    {
+        if(y&1) temp=(temp*x);
+    //temp%=MOD;
+        x=(x*x);
+        y=y>>1;
+    }
+    return temp;
+}
+bool cmp(int a,int b)
+{
+    return a>b;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE
+      freopen("input.txt", "r", stdin);
+      freopen("output.txt", "w", stdout);
+    #endif
+    inl(n);
+    //cout<<n<<endl;
+    mk(ll,A,n);
+    vector<int> rem[3];
+    int zero=false;
+    ll sum=0;
+    for(int i=0;i<n;i++)
+    {
+        cin>>A[i];
+        if(A[i]==0)
+        {
+            zero++;
+        }
+        rem[A[i]%3].push_back(A[i]);
+        //cout<<A[i]<<" ";
+        sum+=A[i];
+    }
+    if(n==1)
+    {
+        cout<<A[0]<<endl;
+        return 0;
+    }
+    //cout<<sum<<endl;
+    if(!zero)
+    {
+        cout<<"-1"<<endl;
+        return 0;
+    }
+    if(zero == n)
+    {
+        cout<<"0"<<endl;
+        return 0;
+    }
+    if(sum%3 == 0)
+    {
+        sort(A,A+n);
+        for(int i=n-1;i>=0;i--)
+            cout<<A[i];
+        return 0;
+    }
+    int counter=(sum%3);
+    //cout<<counter<<endl;
+    if(rem[counter].size()==0)
+    {
+        if(zero == n-2)
+        {
+            cout<<"0"<<endl;
+            return 0;
+        }
+        counter=3-counter;
+        if(rem[counter].size()>=2)
+        {
+            sort(rem[counter].begin(),rem[counter].end());
+            int a=rem[counter][0];
+            int b=rem[counter][1];
+            sort(A,A+n,cmp);
+            bool Af=false,Bf=false;
+            for(int i=0;i<n;i++)
+            {
+                if(A[i]==a && !Af){
+                    Af=true;
+                }
+                else if(A[i] == b && !Bf)
+                {
+                    Bf=true;
+                }
+                else
+                    cout<<A[i];
+            }
+        }
+        else
+        {
+            cout<<"-1"<<endl;
+        }
+        return 0;
+    }
+    if(zero == n-1)
+    {
+        cout<<"0"<<endl;
+        return 0;
+    }
+    sort(rem[counter].begin(),rem[counter].end());
+    int removed=rem[counter][0];
+    //cout<<removed<<endl;
+    bool r=false;
+    sort(A,A+n,cmp);
+    for(int i=0;i<n;i++)
+    {
+        if(removed==A[i] && !r)
+        {
+            r=true;
+        }
+        else
+        {
+            cout<<A[i];
+        }
+    }
+
+    
+    return 0;   
+}
