@@ -1,0 +1,96 @@
+//https://github.com/rkas123/TEMPLATE/blob/master/Template.cpp
+//Template taken from here
+
+using namespace std;
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE
+      freopen("input.txt", "r", stdin);
+      freopen("output.txt", "w", stdout);
+    #endif
+    string a,b;
+    cin>>a>>b;
+    in(n);
+    int dp[26][26];
+    for(int i=0;i<26;i++)
+    {
+        for(int j=0;j<26;j++)
+            dp[i][j]=MAX;
+        dp[i][i]=0;
+    }
+    char u,v;
+    int w;
+    while(n--)
+    {
+        cin>>u>>v>>w;
+        int start=u-'a';
+        int dest=v-'a';
+        dp[start][dest]=min(dp[start][dest],w);
+    }
+    if(a.length()!=b.length())
+    {
+        cout<<"-1"<<endl;
+        return 0;
+    }
+    for(int k=0;k<26;k++)
+    {
+        for(int i=0;i<26;i++)
+        {
+            for(int j=0;j<26;j++)
+            {
+                if(dp[i][j] > dp[i][k] + dp[k][j])
+                {
+                    dp[i][j]=dp[i][k]+dp[k][j];
+                }
+            }
+        }
+    }
+    vpii adjlist[26];
+    for(int i=0;i<26;i++)
+    {
+        for(int j=0;j<26;j++)
+        {
+            adjlist[i].pb({j,dp[i][j]});
+        }
+    }
+    string ans;
+    int temp[26];
+    int answer=0;
+    bool flag=true;
+    for(int i=0;i<a.length();i++)
+    {
+        if(a[i]==b[i]){
+            ans+=a[i];
+            continue;
+        }
+        int start=a[i]-'a';
+        int dest=b[i]-'a';
+        char least;
+        int cost=MAX;
+        for(int j=0;j<26;j++)
+        {
+            int pos=dp[start][j]+dp[dest][j];
+            if(pos < cost)
+            {
+                cost=pos;
+                least=j;
+            }
+        }
+        if(cost >= MAX)
+        {
+            flag=false;
+            break;
+        }
+        answer+=cost;
+        ans+=('a'+least);
+    }       
+    if(!flag)
+    {
+        cout<<"-1"<<endl;
+        return 0;
+    }
+    cout<<answer<<endl<<ans<<endl;
+    return 0;   
+}
