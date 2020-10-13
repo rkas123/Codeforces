@@ -1,0 +1,59 @@
+//https://github.com/rkas123/TEMPLATE/blob/master/Template.cpp
+//Template taken from here
+
+using namespace std;
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE
+      freopen("input.txt", "r", stdin);
+      freopen("output.txt", "w", stdout);
+    #endif
+    in(n);
+    int dp[n][n];
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            cin>>dp[i][j];
+        }
+    }
+    in(k);
+    while(k--)
+    {
+        in(u);in(v);in(w);
+        u--;v--;
+        dp[u][v]=min(dp[u][v],w);
+        dp[v][u]=min(dp[v][u],w);
+        int mid=u;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(dp[i][j] > dp[i][mid] + dp[mid][j])
+                    dp[i][j]=dp[i][mid]+dp[mid][j];
+            }
+        }
+        mid=v;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(dp[i][j] > dp[i][mid] + dp[mid][j])
+                    dp[i][j]=dp[i][mid]+dp[mid][j];
+            }
+        }
+        ll answer=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i+1;j<n;j++)
+            {
+                answer+=dp[i][j];
+            }
+        }
+        cout<<answer<<" ";
+    }
+    
+    return 0;   
+}
