@@ -1,0 +1,104 @@
+//https://github.com/rkas123/TEMPLATE/blob/master/Template.cpp
+//Template taken from here
+
+using namespace std;
+int group[100005];
+int parent[100005];
+int getParent(int src)
+{
+    if(src==parent[src])
+        return src;
+    return parent[src]=getParent(parent[src]);
+}
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE
+      freopen("input.txt", "r", stdin);
+      freopen("output.txt", "w", stdout);
+    #endif
+    in(n);
+    in(m);
+    in(k);
+    
+    int j=1;
+    group[0]=0;
+    for(int i=1;i<=k;i++)
+    {
+        in(t);
+        while(t--)
+        {
+            parent[j]=j;
+            group[j++]=i;
+        }
+    }
+    int dp[k+1][k+1];
+    for(int i=0;i<=k;i++)
+    {
+        for(int j=0;j<=k;j++)
+            dp[i][j]=MAX;
+        dp[i][i]=0;
+    }
+    vector<pii> adjlist[n+1];
+    for(int i=0;i<m;i++)
+    {
+        in(u);in(v);in(x);
+        adjlist[u].pb({v,x});
+        adjlist[v].pb({u,x});
+        dp[group[u]][group[v]]=min(dp[group[u]][group[v]],x);
+        dp[group[v]][group[u]]=min(dp[group[v]][group[u]],x);
+        if(x==0)
+        {
+            int parent_u=getParent(u);
+            int parent_v=getParent(v);
+            parent[parent_u]=parent_v;        
+        }
+    }
+    j=1;
+    bool flag=true;
+    while(j<=n)
+    {
+        int currGroup=group[j];
+        int currGroupParent=getParent(j);
+        while(j<=n && group[j]==currGroup)
+        {
+            if(getParent(j) != currGroupParent)
+            {
+                flag=false;
+                break;
+            }
+            j++;
+        }
+    }
+    if(!flag)
+    {
+        cout<<"No"<<endl;
+        return 0;
+    }
+    cout<<"Yes"<<endl;
+    for(int i=1;i<=k;i++)
+    {
+        for(int j=1;j<=k;j++)
+        {
+            for(int K=1;K<=k;K++)
+            {
+                if(dp[j][K] > dp[j][i] + dp[i][K]){
+                    dp[j][K]=dp[j][i] + dp[i][K];
+                }
+            }
+        }
+    }
+    for(int i=1;i<=k;i++)
+    {
+        for(int j=1;j<=k;j++){
+            if(dp[i][j] == MAX)
+                cout<<"-1 ";
+            else
+                cout<<dp[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    return 0;
+}
