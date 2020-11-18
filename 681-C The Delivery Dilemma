@@ -1,0 +1,61 @@
+//https://github.com/rkas123/TEMPLATE/blob/master/Template.cpp
+//Template taken from here
+
+using namespace std;
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE
+      freopen("input.txt", "r", stdin);
+      freopen("output.txt", "w", stdout);
+    #endif
+    test()
+    {
+        in(n);
+        ll A[n];
+        ll B[n];
+        vpll v;
+        for(int i=0;i<n;i++)
+        {
+            inl(t);
+            v.pb({t,0});
+        }
+        ll answer=0;
+        for(int i=0;i<n;i++)
+        {
+            in(t);
+            answer+=t;
+            v[i].S=t;
+        }
+        sort(v.begin(),v.end());
+        
+        int s=0;
+        int e=n-1;
+        while(s<=e)
+        {
+            int mid=(s+e)/2;
+            ll curr=v[mid].F;
+            ll temp=0;
+            for(int i=0;i<n;i++)
+            {
+                if(v[i].F > curr)
+                {
+                    temp+=v[i].S;
+                }
+            }
+            if(temp > curr)
+            {
+                s=mid+1;
+            }
+            else
+            {
+                e=mid-1;
+            }
+            temp=max(temp,curr);
+            answer=min(answer,temp);
+        }
+        cout<<answer<<endl;
+    }
+    return 0;
+}
