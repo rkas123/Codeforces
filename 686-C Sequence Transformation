@@ -1,0 +1,46 @@
+//https://github.com/rkas123/TEMPLATE/blob/master/Template.cpp
+//Template taken from here
+ 
+using namespace std;
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE
+      freopen("input.txt", "r", stdin);
+      freopen("output.txt", "w", stdout);
+    #endif
+    test()
+    {
+        in(n);
+        map<int,int> count;
+        int most=0;
+        map<int,vector<int>> indexes;
+        for(int i=1;i<=n;i++)
+        {
+            in(t);
+            count[t]++;
+            indexes[t].pb(i);
+            most=max(most,count[t]);
+        }
+        int answer=MAX;
+        for(auto it: count)
+        {
+            
+                int count=0;
+                for(int i=1;i<indexes[it.F].size();i++)
+                {
+                    if(indexes[it.F][i]-indexes[it.F][i-1] > 1)
+                        count++;
+                }
+                if(indexes[it.F][0] > 1)
+                    count++;
+                if(indexes[it.F][indexes[it.F].size()-1] != n)
+                    count++;
+                answer=min(answer,count);
+            
+        }
+        cout<<answer<<endl;
+    }
+    return 0;
+}
