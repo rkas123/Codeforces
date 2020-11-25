@@ -1,0 +1,36 @@
+//https://github.com/rkas123/TEMPLATE/blob/master/Template.cpp
+//Template taken from here
+
+using namespace std;
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE
+      freopen("input.txt", "r", stdin);
+      freopen("output.txt", "w", stdout);
+    #endif
+    test()
+    {
+        in(n);
+        map<int,int> m;
+        map<int,int> prev;
+        for(int i=1;i<=n;i++)
+        {
+            in(t);
+            m[t]++;
+            prev[t]=i;
+        }
+        int answer=-1;
+        for(auto it: m)
+        {
+            if(it.S == 1)
+            {
+                answer=prev[it.F];
+                break;
+            }
+        }
+        cout<<answer<<endl;
+    }
+    return 0;
+}
