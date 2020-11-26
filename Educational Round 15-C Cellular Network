@@ -1,0 +1,64 @@
+//https://github.com/rkas123/TEMPLATE/blob/master/Template.cpp
+//Template taken from here
+
+using namespace std;
+int main()
+{
+    // ios_base::sync_with_stdio(false);
+    // cin.tie(NULL);
+    // #ifndef ONLINE_JUDGE
+    //   freopen("input.txt", "r", stdin);
+    //   freopen("output.txt", "w", stdout);
+    // #endif
+    in(n);in(m);
+    vpll v;
+    for(int i=0;i<n;i++)
+    {
+        inl(t);
+        v.pb({t,0});
+    }
+    for(int i=0;i<m;i++)
+    {
+        inl(t);
+        v.pb({t,1});
+    }
+    sort(v.begin(),v.end());
+    ll A[n+m];
+    for(int i=0;i<n+m;i++)
+    {
+        if(v[i].S==1)
+            A[i]=0;
+        else
+            A[i]=inf;
+    }
+    int s=0;
+    while(s<n+m)
+    {
+        if(v[s].S==1)
+        {
+            int i=s-1;
+
+            while(i>=0 && v[i].S==0)
+            {
+                ll dis=v[s].F - v[i].F;
+                A[i]=min(A[i],dis);
+                i--;
+            }
+            i=s+1;
+            while(i<n+m && v[i].S == 0)
+            {
+                ll dis=v[i].F - v[s].F;
+                A[i]=min(A[i],dis);
+                dis++;i++;
+            }
+        }
+        s++;
+    }
+    ll answer=0;
+    for(int i=0;i<n+m;i++)
+    {
+        answer=max(answer,A[i]);
+    }
+    cout<<answer<<endl;
+    return 0;
+}
