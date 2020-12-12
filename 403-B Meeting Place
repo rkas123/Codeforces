@@ -1,0 +1,63 @@
+//https://github.com/rkas123/TEMPLATE/blob/master/Template.cpp
+//Template taken from here
+
+using namespace std;
+int n;
+vpll v;
+bool pos(double x)
+{
+    double s=0;
+    double e=1e9;
+    for(int i=0;i<n;i++)
+    {
+        double st=v[i].F - (v[i].S*x);
+        double et=v[i].F + (v[i].S*x);
+        if(st > e || et < s)
+        {
+            return false;
+        } 
+        s=max(s,st);
+        e=min(e,et);
+    }
+    return true;
+}
+int main()
+{
+    // ios_base::sync_with_stdio(false);
+    // cin.tie(NULL);
+    // #ifndef ONLINE_JUDGE
+    //   freopen("input.txt", "r", stdin);
+    //   freopen("output.txt", "w", stdout);
+    // #endif
+    cin>>n;
+    for(int i=0;i<n;i++)
+    {
+        inl(a);
+        v.pb({a,0});
+    }
+    for(int i=0;i<n;i++)
+    {
+        inl(a);
+        v[i].S=a;
+    }
+    double answer;
+    double ts=0;
+    double te=1e9;
+    int count=0;
+    while(count<50)
+    {
+        double mid=(ts+te)/2;
+        if(pos(mid))
+        {
+            answer=mid;
+            te=mid;
+        }
+        else
+        {
+            ts=mid;
+        }
+        count++;
+    }
+    cout<<setprecision(10)<<answer<<endl;
+    return 0;
+}
