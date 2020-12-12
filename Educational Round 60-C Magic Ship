@@ -1,0 +1,61 @@
+/n;
+    ll left=x%n;
+    ll xchang=rot*X[n-1];
+    ll ychang=rot*Y[n-1];
+    if(left != 0)
+    {
+        xchang+=X[left-1];
+        ychang+=Y[left-1];
+    }
+    ll changes=abs(dx-(sx+xchang));
+    changes+=abs(dy-(sy+ychang));
+    if(changes <= x)
+        return true;
+    return false;
+}
+int main()
+{
+    // ios_base::sync_with_stdio(false);
+    // cin.tie(NULL);
+    // #ifndef ONLINE_JUDGE
+    //   freopen("input.txt", "r", stdin);
+    //   freopen("output.txt", "w", stdout);
+    // #endif
+    cin>>sx>>sy>>dx>>dy;
+    in(n);
+    cin>>s;
+    int x=0,y=0;
+    for(int i=0;i<n;i++)
+    {
+        if(s[i]=='U')
+        {
+            y++;
+        }
+        else if(s[i]=='D')
+            y--;
+        else if(s[i]=='L')
+            x--;
+        else
+            x++;
+        X[i]=x;
+        Y[i]=y;
+    }
+    ll s=0;
+    ll e=1e18;
+    ll answer=-1;
+    while(s<=e)
+    {
+        ll mid=(s+e)/2;
+        if(pos(mid))
+        {
+            answer=mid;
+            e=mid-1;
+        }
+        else
+        {
+            s=mid+1;
+        }
+    }
+    cout<<answer<<endl;
+    return 0;
+}
