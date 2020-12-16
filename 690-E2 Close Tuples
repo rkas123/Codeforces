@@ -1,0 +1,100 @@
+//https://github.com/rkas123/TEMPLATE/blob/master/Template.cpp
+//Template taken from here
+
+using namespace std;
+ll factorial[200005];
+ll invfact[200005];
+int N=200005;
+ll fastexp(ll a,ll b)
+{
+    ll ans=1;
+    ll temp=a;
+    while(b>0)
+    {
+        if(b&1)
+            ans=(ans*temp)%mod;
+        temp=(temp*temp)%mod;
+        b>>=1;
+    }
+    return ans;
+}
+
+ll ncr(ll n, ll r)
+    {
+        if(r>n)
+            return 0ll;
+        ll num=factorial[n];
+        num*=invfact[r];
+        num%=mod;
+        num*=invfact[n-r];
+        num%=mod;
+        return num;
+    }
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE
+      freopen("input.txt", "r", stdin);
+      freopen("output.txt", "w", stdout);
+    #endif
+    factorial[0]=1ll;
+    for(ll i=1ll;i<N;i++)
+    {
+        factorial[i]=(factorial[i-1]*i)%mod;
+    }
+
+    invfact[N-1]=fastexp(factorial[N-1],mod-2);
+    for(int i=N-2;i>=0;i--)
+    {
+        invfact[i]=invfact[i+1]*(i+1);
+        invfact[i]%=mod;
+    }
+
+    
+    test()
+    {
+        in(n);in(m);in(k);
+        map<ll,ll> M;
+        for(int i=0;i<n;i++)
+        {
+            inl(a);
+            M[a]++;
+        }
+        vector<pll> v;
+        vector<ll>cum;
+        ll sum=0;
+        for(auto it: M)
+        {
+            sum+=it.S;
+            cum.pb(sum);
+            v.pb({it.F,it.S});
+            //cout<<it.F<<" "<<sum<<endl;
+        }
+
+        ll answer=0;
+        int s=0;
+        int e=0;
+        while(s<v.size())
+        {
+            while(e<v.size()-1)
+            {
+                if(v[e+1].F - v[s].F <= k)
+                    e++;
+                else
+                    break;
+            }            
+            //cout<<v[s].F<<" "<<v[e].F<<" ";
+            ll rem=cum[e]-cum[s];
+            for(int i=1;i<=m && i<=v[s].S;i++)
+            {
+                ll temp=(ncr(v[s].S,i)*ncr(rem,m-i))%mod;
+                answer=(answer+temp)%mod;
+            }
+            //cout<<answer<<endl;
+            s++;
+        }
+        cout<<answer<<endl;
+    }
+    return 0;
+}
