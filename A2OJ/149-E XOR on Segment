@@ -1,0 +1,170 @@
+#include<bits/stdc++.h>
+
+#define int long long
+#define pii pair<int32_t,int32_t>
+#define pll pair<long long,long long>
+
+#define in(x) long long x;cin>>x
+#define ini(x) int32_t x;cin>>x
+#define pb push_back
+#define F first
+#define S second
+#define endl "\n"
+#define segleft 2*index+1
+#define segright 2*index+2
+
+#define test() int t;cin>>t;while(t--)
+#define KStest() int t,t1;cin>>t;t1=t;while(t--)
+#define KScout cout<<"Case #"<<t1-t<<": "
+
+const long long mod = 1e9+7;
+const int MAX = INT_MAX;
+const long long inf = 1e18 + 5;
+const double pi = 3.14159265358979323846; 
+
+int dirX[]={1,-1,0,0};
+int dirY[]={0,0,1,-1};
+
+using namespace std;
+int n;
+pii tree[400001][20];
+int power[21];
+int getindex(int index,int s,int e)
+{
+	if(s==e)
+	{
+		return index;
+	}
+	int mid=(s+e)/2;
+	return getindex(segleft,s,mid);
+}
+void update(int index,int s,int e,int l,int r,int j)
+{
+	if(s>r || e<l)
+		return;
+	if(s>=l && e<=r)
+	{
+		tree[index][j].S++;
+		int sum=tree[index][j].F;
+		tree[index][j].F=e-s+1 - sum;
+		return;
+	}
+	int mid=(s+e)/2;
+	update(segleft,s,mid,l,r,j);
+	update(segright,mid+1,e,l,r,j);
+	tree[index][j].F=tree[segleft][j].F+tree[segright][j].F;
+	if(tree[index][j].S & 1)
+	{
+		int sum=tree[index][j].F;
+		tree[index][j].F=e-s+1-sum;
+	}
+}
+int query(int index,int s,int e,int l,int r,int j,int xors)
+{
+	if(s>r || e<l)
+		return 0;
+	if(s>=l && e<=r)
+	{
+		int ans=0;
+		
+			if(xors &1)
+			{
+				int sum=e-s+1 - tree[index][j].F;
+				ans+=(power[j]*sum);
+			}
+			else
+			{
+				ans+=(power[j]*tree[index][j].F);
+			}
+		
+		
+		return ans;
+	}
+	int mid=(s+e)/2;
+	int ans=query(segleft,s,mid,l,r,j,xors+tree[index][j].S);
+	ans+=query(segright,mid+1,e,l,r,j,xors+tree[index][j].S);
+	return ans;
+}
+void buildtree(int index,int s,int e)
+{
+	if(s==e)
+		return;
+	int mid=(s+e)/2;
+	buildtree(segleft,s,mid);
+	buildtree(segright,mid+1,e);
+	for(int i=0;i<20;i++)
+	{
+		tree[index][i].F = tree[segleft][i].F + tree[segright][i].F;
+	}
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE
+      freopen("input.txt", "r", stdin);
+      freopen("output.txt", "w", stdout);
+    #endif
+    power[0]=1;
+    for(int i=1;i<21;i++)
+    {
+    	power[i]=power[i-1]*2;
+    }
+	cin>>n;
+	int size=1;
+	while(size<n)
+		size*=2;
+	int treesize=size*2;
+	for(int i=0;i<treesize;i++)
+	{
+		for(int j=0;j<20;j++)
+			tree[i][j]={0,0};
+	}
+	int index=getindex(0,0,size-1);
+	for(int i=0;i<n;i++)
+	{
+		in(t);
+		int j=0;
+		while(t>0)
+		{
+			if(t&1)
+			{
+				tree[index][j].F=1;
+			}
+			t>>=1;
+			j++;
+		}
+		index++;
+	}
+	buildtree(0,0,size-1);
+	test()
+	{
+		in(t);
+		if(t==1)
+		{
+			in(l);in(r);
+			int ans=0;
+			for(int j=0;j<20;j++)
+			{
+				int temp=query(0,0,size-1,l-1,r-1,j,0);
+				ans+=temp;
+			}
+			cout<<ans<<endl;
+		}
+		else
+		{
+			in(l);in(r);in(val);
+			int j=0;
+			while(val>0)
+			{
+				if(val&1)
+				{
+					update(0,0,size-1,l-1,r-1,j);
+				}
+				val>>=1;
+				j++;
+			}
+		}
+	}
+    return 0;
+}
