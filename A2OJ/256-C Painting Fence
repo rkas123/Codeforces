@@ -1,0 +1,74 @@
+#include<bits/stdc++.h>
+
+#define int long long
+#define pii pair<int32_t,int32_t>
+#define pll pair<long long,long long>
+
+#define in(x) long long x;cin>>x
+#define ini(x) int32_t x;cin>>x
+#define pb push_back
+#define F first
+#define S second
+#define endl "\n"
+#define segleft 2*index+1
+#define segright 2*index+2
+
+#define test() int t;cin>>t;while(t--)
+#define KStest() int t,t1;cin>>t;t1=t;while(t--)
+#define KScout cout<<"Case #"<<t1-t<<": "
+
+const long long mod = 1e9+7;
+const int MAX = INT_MAX;
+const long long inf = 1e18 + 5;
+const double pi = 3.14159265358979323846; 
+
+int dirX[]={1,-1,0,0};
+int dirY[]={0,0,1,-1};
+
+using namespace std;
+int n;
+int A[5005];
+int cal(int l,int r)
+{
+	int ans=0;
+	int i=l;
+	while(i<=r)
+	{
+		if(A[i]==0){
+			i++;
+			continue;
+		}
+		int start=i;
+		int least=inf;
+		int pos=0;
+		while(i<=r && A[i]!=0)
+		{
+			least=min(least,A[i]);
+			i++;
+		}
+		int end=i-1;
+		pos=end-start+1;
+		for(int j=start;j<=end;j++)
+		{
+			A[j]-=least;
+		}
+		pos=min(pos,cal(start,end)+least);
+		ans+=pos;
+	}
+	return ans;
+
+}
+int32_t main()
+{
+    // ios_base::sync_with_stdio(false);
+    // cin.tie(NULL);
+    // #ifndef ONLINE_JUDGE
+    //   freopen("input.txt", "r", stdin);
+    //   freopen("output.txt", "w", stdout);
+    // #endif	
+	cin>>n;
+	for(int i=0;i<n;i++)
+		cin>>A[i];
+	cout<<cal(0,n-1)<<endl;
+    return 0;
+}
