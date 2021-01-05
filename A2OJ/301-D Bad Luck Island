@@ -1,0 +1,93 @@
+#include<bits/stdc++.h>
+
+#define int long long
+#define pii pair<int32_t,int32_t>
+#define pll pair<long long,long long>
+
+#define in(x) long long x;cin>>x
+#define ini(x) int32_t x;cin>>x
+#define pb push_back
+#define F first
+#define S second
+#define endl "\n"
+#define segleft 2*index+1
+#define segright 2*index+2
+
+#define test() int t;cin>>t;while(t--)
+#define KStest() int t,t1;cin>>t;t1=t;while(t--)
+#define KScout cout<<"Case #"<<t1-t<<": "
+
+const long long mod = 1e9+7;
+const int MAX = INT_MAX;
+const long long inf = 1e18 + 5;
+const double pi = 3.14159265358979323846; 
+
+int dirX[]={1,-1,0,0};
+int dirY[]={0,0,1,-1};
+
+using namespace std;
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE
+      freopen("input.txt", "r", stdin);
+      freopen("output.txt", "w", stdout);
+    #endif	
+	in(r);in(s);in(p);
+	double dp[r+1][s+1][p+1];
+	for(int i=0;i<=r;i++)
+	{
+		for(int j=0;j<=s;j++)
+		{
+			for(int k=0;k<=p;k++)
+				dp[i][j][k]=0;
+		}
+	}
+	dp[r][s][p]=1;
+	for(int i=r;i>=0;i--)
+	{
+		for(int j=s;j>=0;j--)
+		{
+			for(int k=p;k>=0;k--)
+			{
+				double total=i+j+k;
+				if(total<=1)
+					continue;
+				double curr=dp[i][j][k];
+				total=(total*(total-1))/2;
+				total-=((i*(i-1))/2);
+				total-=((j*(j-1))/2);
+				total-=((k*(k-1))/2);
+				if(total==0)
+					continue;
+				double pos=(i*k)/(total);
+				dp[i-1][j][k]+=(pos*curr);
+				pos=(i*j)/total;
+				dp[i][j-1][k]+=(pos*curr);
+				pos=(j*k)/(total);
+				dp[i][j][k-1]+=(pos*curr);
+			}
+		}
+	}
+	double ans=0;
+	for(int i=0;i<=r;i++)
+	{
+		ans+=(dp[i][0][0]);
+	}
+	cout<<setprecision(15)<<ans<<" ";
+	ans=0;
+	for(int i=0;i<=s;i++)
+	{
+		ans+=(dp[0][i][0]);
+	}
+	cout<<setprecision(15)<<ans<<" ";
+	ans=0;
+	for(int i=0;i<=p;i++)
+	{
+		ans+=(dp[0][0][i]);
+	}
+	cout<<setprecision(15)<<ans<<endl;
+    return 0;
+}
