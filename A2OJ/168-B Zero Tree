@@ -1,0 +1,84 @@
+#include<bits/stdc++.h>
+
+#define int long long
+#define pii pair<int32_t,int32_t>
+#define pll pair<long long,long long>
+
+#define in(x) long long x;cin>>x
+#define ini(x) int32_t x;cin>>x
+#define pb push_back
+#define F first
+#define S second
+#define endl "\n"
+#define segleft 2*index+1
+#define segright 2*index+2
+
+#define test() int t;cin>>t;while(t--)
+#define KStest() int t,t1;cin>>t;t1=t;while(t--)
+#define KScout cout<<"Case #"<<t1-t<<": "
+
+const long long mod = 1e9+7;
+const int MAX = INT_MAX;
+const long long inf = 1e18 + 5;
+const double pi = 3.14159265358979323846; 
+
+int dirX[]={1,-1,0,0};
+int dirY[]={0,0,1,-1};
+
+using namespace std;
+int n;
+vector<int> adjlist[100005];
+int A[100005];
+bool vis[100005];
+pll di[100005];
+void dfs(int src)
+{	
+	vis[src]=true;
+	for(auto it: adjlist[src])
+	{
+		if(!vis[it])
+			dfs(it);
+	}
+	pll p={0,0};
+	for(auto it: adjlist[src])
+	{
+		p.F=min(p.F,di[it].F);
+		p.S=max(p.S,di[it].S);
+	}
+	int num=A[src] + p.S + p.F;
+	moves+=abs(num);
+	if(num > 0)
+	{
+		p.F -= num;
+	}	
+	if(num < 0)
+	{
+		p.S -= num;
+	}
+	di[src]=p;
+}
+int32_t main()
+{
+    // ios_base::sync_with_stdio(false);
+    // cin.tie(NULL);
+    // #ifndef ONLINE_JUDGE
+    //   freopen("input.txt", "r", stdin);
+    //   freopen("output.txt", "w", stdout);
+    // #endif
+	cin>>n;
+	for(int i=1;i<n;i++)
+	{
+		in(a);in(b);
+		adjlist[a].pb(b);
+		adjlist[b].pb(a);
+	}
+	for(int i=1;i<=n;i++)
+	{
+		cin>>A[i];
+		vis[i]=false;
+		di[i]={0,0};
+	}
+	dfs(1);
+	cout<<(di[1].F * -1) + di[1].S<<endl;
+    return 0;
+}
